@@ -7,74 +7,30 @@
 
 import UIKit
 
-// Реализация оступа в UITextField
-extension UITextField {
-
-    enum PaddingSide {
-        case left(CGFloat)
-        case right(CGFloat)
-        case both(CGFloat)
-    }
-
-    func addPadding(_ padding: PaddingSide) {
-
-        self.leftViewMode = .always
-        self.layer.masksToBounds = true
-
-
-        switch padding {
-
-        case .left(let spacing):
-            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: spacing, height: self.frame.height))
-            self.leftView = paddingView
-            self.rightViewMode = .always
-
-        case .right(let spacing):
-            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: spacing, height: self.frame.height))
-            self.rightView = paddingView
-            self.rightViewMode = .always
-
-        case .both(let spacing):
-            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: spacing, height: self.frame.height))
-            // left
-            self.leftView = paddingView
-            self.leftViewMode = .always
-            // right
-            self.rightView = paddingView
-            self.rightViewMode = .always
-        }
-    }
-}
-
 class ProfileHeaderView: UIView {
 
     private var statusText: String?
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let statusButton: UIButton = {
+    // MARK: Свойства
+
+    private let setStatusButton: UIButton = {
         let button = UIButton()
         button.setTitle("Set status", for: .normal)
         button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.layer.cornerRadius = 4
-        button.titleShadowColor(for: .normal)
+
+        // Добавлена тень
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowOpacity = 0.7
         button.layer.shadowRadius = 4.0
+
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    let statusTextField: UITextField = {
+    private let statusTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = " Enter text here..."
         textField.textColor = .black
@@ -89,7 +45,7 @@ class ProfileHeaderView: UIView {
         return textField
     }()
 
-    let mainLabel: UILabel = {
+    private let fullNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Hipster Cat"
         label.textColor = .black
@@ -98,7 +54,7 @@ class ProfileHeaderView: UIView {
         return label
     }()
 
-    let statusLabel: UILabel = {
+    private let statusLabel: UILabel = {
         let label = UILabel()
         label.text = "Wait for something..."
         label.textColor = .gray
@@ -107,49 +63,68 @@ class ProfileHeaderView: UIView {
         return label
     }()
 
-    let catFaceImage: UIImageView = {
-        let image = UIImage(named: "catImage2")
-        let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+    let avatarImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "catImage2"))
+        imageView.frame = .zero
+        imageView.backgroundColor = .red
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.cornerRadius = imageView.frame.height/2
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    func setupLayout() {
+    let labelVerticalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .fillEqually
+        stack.axis = .vertical
+        stack.spacing = 10
+        return stack
+    }()
 
-        // добавление catFaceImage на profileHV
-        self.addSubview(catFaceImage)
-        catFaceImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 16).isActive = true
-        catFaceImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
-        catFaceImage.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        catFaceImage.widthAnchor.constraint(equalToConstant: 100).isActive = true
+    let infoHorizontalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.spacing = 20
+        return stack
+    }()
 
-        // добавление mainLabel, statusLabel, statusTextField на profileHV
-        statusTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    // MARK: Методы
 
-        let textStackView = UIStackView(arrangedSubviews: [mainLabel, statusLabel, statusTextField])
-        textStackView.translatesAutoresizingMaskIntoConstraints = false
-        textStackView.distribution = .fillEqually
-        textStackView.axis = .vertical
-        self.addSubview(textStackView)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        drawSelf()
+    }
 
-        textStackView.centerYAnchor.constraint(equalTo: catFaceImage.centerYAnchor).isActive = true
-        textStackView.leadingAnchor.constraint(equalTo: catFaceImage.trailingAnchor, constant: 16).isActive = true
-        textStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        // добавление statusButton на profileHV
-        self.addSubview(statusButton)
-        statusButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    func drawSelf() {
+        self.addSubview(infoHorizontalStack)
+        self.addSubview(setStatusButton)
+        self.infoHorizontalStack.addArrangedSubview(avatarImageView)
+        self.infoHorizontalStack.addArrangedSubview(labelVerticalStack)
+        self.labelVerticalStack.addArrangedSubview(fullNameLabel)
+        self.labelVerticalStack.addArrangedSubview(statusLabel)
+        self.labelVerticalStack.addArrangedSubview(statusTextField)
 
-        statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
-        statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
-        statusButton.topAnchor.constraint(equalTo: textStackView.bottomAnchor, constant: 16).isActive = true
+        NSLayoutConstraint.activate([
+            self.infoHorizontalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            self.infoHorizontalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.infoHorizontalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+
+            self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
+
+            self.setStatusButton.topAnchor.constraint(equalTo: self.infoHorizontalStack.bottomAnchor, constant: 15),
+            self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
     }
 
     @objc private func buttonPressed() {

@@ -7,19 +7,36 @@
 
 import UIKit
 
+import UIKit
+
+
 class ProfileViewController: UIViewController {
 
-    let profileHV = ProfileHeaderView()
+    private lazy var profileHV: ProfileHeaderView = {
+        let view = ProfileHeaderView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
-        view.addSubview(profileHV)
+        setupView()
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        profileHV.avatarImageView.layer.cornerRadius = profileHV.avatarImageView.layer.frame.width / 2
+    }
 
-        profileHV.frame = view.safeAreaLayoutGuide.layoutFrame
+    private func setupView() {
+        self.view.backgroundColor = .lightGray
+        self.view.addSubview(self.profileHV)
+
+        NSLayoutConstraint.activate([
+            self.profileHV.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.profileHV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.profileHV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.profileHV.heightAnchor.constraint(equalToConstant: 220),
+        ])
     }
 }
