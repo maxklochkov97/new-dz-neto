@@ -23,12 +23,11 @@ class ProfileHeaderView: UIView {
         return button
     }()
 
-    private let changeTitleButton: UIButton = {
+    let changeTitleButton: UIButton = {
         let button = UIButton()
         button.setTitle("Change title", for: .normal)
         button.backgroundColor = .systemBlue
         //button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.layer.cornerRadius = 4
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -66,15 +65,13 @@ class ProfileHeaderView: UIView {
         return label
     }()
 
-    private let avatarImageView: UIImageView = {
+    let avatarImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "catImage2"))
         imageView.frame = .zero
-        imageView.backgroundColor = .red
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -83,6 +80,7 @@ class ProfileHeaderView: UIView {
     private let labelVerticalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .fillProportionally
         stack.axis = .vertical
         stack.spacing = 10
         return stack
@@ -116,17 +114,11 @@ class ProfileHeaderView: UIView {
 
     private func drawSelf() {
         self.addSubview(mainVerticalStack)
+        [infoHorizontalStack, setStatusButton].forEach({self.mainVerticalStack.addArrangedSubview($0)})
 
-        self.mainVerticalStack.addArrangedSubview(infoHorizontalStack)
-        self.mainVerticalStack.addArrangedSubview(setStatusButton)
-        //self.mainVerticalStack.addArrangedSubview(changeTitleButton)
+        [avatarImageView, labelVerticalStack].forEach({self.infoHorizontalStack.addArrangedSubview($0)})
 
-
-        self.infoHorizontalStack.addArrangedSubview(avatarImageView)
-        self.infoHorizontalStack.addArrangedSubview(labelVerticalStack)
-        self.labelVerticalStack.addArrangedSubview(fullNameLabel)
-        self.labelVerticalStack.addArrangedSubview(statusLabel)
-        self.labelVerticalStack.addArrangedSubview(statusTextField)
+        [fullNameLabel, statusLabel, statusTextField].forEach({self.labelVerticalStack.addArrangedSubview($0)})
 
         NSLayoutConstraint.activate([
             self.mainVerticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
@@ -136,7 +128,6 @@ class ProfileHeaderView: UIView {
 
             self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
             self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            self.changeTitleButton.heightAnchor.constraint(equalToConstant: 50),
             self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }

@@ -22,18 +22,24 @@ class ProfileViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
+        profileHV.avatarImageView.layer.cornerRadius = profileHV.avatarImageView.layer.frame.width / 2
     }
 
     private func setupView() {
         self.view.backgroundColor = .lightGray
-        self.view.addSubview(self.profileHV)
+        [self.profileHV.changeTitleButton, self.profileHV].forEach({ self.view.addSubview($0)})
 
         NSLayoutConstraint.activate([
             self.profileHV.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.profileHV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             self.profileHV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.profileHV.heightAnchor.constraint(equalToConstant: 220)
+            self.profileHV.heightAnchor.constraint(equalToConstant: 220),
+
+            // changeTitleButton
+            self.profileHV.changeTitleButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.profileHV.changeTitleButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.profileHV.changeTitleButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            self.profileHV.changeTitleButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

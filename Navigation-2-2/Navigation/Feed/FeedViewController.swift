@@ -53,8 +53,7 @@ class FeedViewController: UIViewController {
     private func drawSelf() {
         self.view.backgroundColor = .lightGray
         self.view.addSubview(buttonVerticalStack)
-        self.buttonVerticalStack.addArrangedSubview(postButtonOne)
-        self.buttonVerticalStack.addArrangedSubview(postButtonSecond)
+        [postButtonOne, postButtonSecond].forEach {self.buttonVerticalStack.addArrangedSubview($0)}
 
         NSLayoutConstraint.activate([
             self.buttonVerticalStack.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
