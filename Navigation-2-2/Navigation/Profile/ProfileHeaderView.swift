@@ -26,7 +26,7 @@ class ProfileHeaderView: UIView {
     private let changeTitleButton: UIButton = {
         let button = UIButton()
         button.setTitle("Change title", for: .normal)
-        button.backgroundColor = .purple
+        button.backgroundColor = .systemBlue
         //button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.layer.cornerRadius = 4
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -74,34 +74,32 @@ class ProfileHeaderView: UIView {
         imageView.layer.borderWidth = 3
         imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.white.cgColor
-        imageView.layer.cornerRadius = (imageView.frame.width / 2)
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    let labelVerticalStack: UIStackView = {
+    private let labelVerticalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fillEqually
         stack.axis = .vertical
         stack.spacing = 10
         return stack
     }()
 
-    let buttonVerticalStack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fillEqually
-        stack.axis = .vertical
-        stack.spacing = 10
-        return stack
-    }()
-
-    let infoHorizontalStack: UIStackView = {
+    private let infoHorizontalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = 20
+        return stack
+    }()
+
+    private let mainVerticalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.spacing = 10
         return stack
     }()
 
@@ -116,10 +114,14 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func drawSelf() {
-        self.addSubview(infoHorizontalStack)
-        self.addSubview(setStatusButton)
-        //self.addSubview(changeTitleButton)
+    private func drawSelf() {
+        self.addSubview(mainVerticalStack)
+
+        self.mainVerticalStack.addArrangedSubview(infoHorizontalStack)
+        self.mainVerticalStack.addArrangedSubview(setStatusButton)
+        //self.mainVerticalStack.addArrangedSubview(changeTitleButton)
+
+
         self.infoHorizontalStack.addArrangedSubview(avatarImageView)
         self.infoHorizontalStack.addArrangedSubview(labelVerticalStack)
         self.labelVerticalStack.addArrangedSubview(fullNameLabel)
@@ -127,20 +129,15 @@ class ProfileHeaderView: UIView {
         self.labelVerticalStack.addArrangedSubview(statusTextField)
 
         NSLayoutConstraint.activate([
-            // infoHorizontalStack
-            self.infoHorizontalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            self.infoHorizontalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.infoHorizontalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.mainVerticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            self.mainVerticalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.mainVerticalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.mainVerticalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 
-            // statusTextField
             self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
-
-            // setStatusButton
-            self.setStatusButton.topAnchor.constraint(equalTo: self.infoHorizontalStack.bottomAnchor, constant: 15),
-            self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            self.changeTitleButton.heightAnchor.constraint(equalToConstant: 50),
+            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 

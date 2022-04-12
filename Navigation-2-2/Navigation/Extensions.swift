@@ -47,31 +47,16 @@ extension UITextField {
     }
 }
 
-
-//func drawSelf() {
-//    self.addSubview(mainVerticalStack)
+//extension UIImageView {
+//  public func maskCircle(anyImage: UIImage) {
+//    self.contentMode = .scaleAspectFit
+//    self.layer.cornerRadius = self.frame.height / 2
+//    self.layer.masksToBounds = false
+//    self.clipsToBounds = true
 //
-//    self.mainVerticalStack.addArrangedSubview(infoHorizontalStack)
-//    self.mainVerticalStack.addArrangedSubview(setStatusButton)
-//    self.mainVerticalStack.addArrangedSubview(changeTitleButton)
-//
-//
-//    self.infoHorizontalStack.addArrangedSubview(avatarImageView)
-//    self.infoHorizontalStack.addArrangedSubview(labelVerticalStack)
-//    self.labelVerticalStack.addArrangedSubview(fullNameLabel)
-//    self.labelVerticalStack.addArrangedSubview(statusLabel)
-//    self.labelVerticalStack.addArrangedSubview(statusTextField)
-//
-//    NSLayoutConstraint.activate([
-//        self.mainVerticalStack.topAnchor.constraint(equalTo: self.topAnchor),
-//        self.mainVerticalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-//        self.mainVerticalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-//        self.mainVerticalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//
-//
-//        self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
-//        self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
-//        self.changeTitleButton.heightAnchor.constraint(equalToConstant: 50),
-//        self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
-//    ])
+//   // make square(* must to make circle),
+//   // resize(reduce the kilobyte) and
+//   // fix rotation.
+//   self.image = anyImage
+//  }
 //}
