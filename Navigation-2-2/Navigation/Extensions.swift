@@ -1,0 +1,62 @@
+//
+//  Extensions.swift
+//  Navigation
+//
+//  Created by Максим Клочков on 12.04.2022.
+//
+
+// Реализация оступа в UITextField
+
+import UIKit
+
+extension UITextField {
+
+    enum PaddingSide {
+        case left(CGFloat)
+        case right(CGFloat)
+        case both(CGFloat)
+    }
+
+    func addPadding(_ padding: PaddingSide) {
+
+        self.leftViewMode = .always
+        self.layer.masksToBounds = true
+
+
+        switch padding {
+
+        case .left(let spacing):
+            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: spacing, height: self.frame.height))
+            self.leftView = paddingView
+            self.rightViewMode = .always
+
+        case .right(let spacing):
+            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: spacing, height: self.frame.height))
+            self.rightView = paddingView
+            self.rightViewMode = .always
+
+        case .both(let spacing):
+            let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: spacing, height: self.frame.height))
+            // left
+            self.leftView = paddingView
+            self.leftViewMode = .always
+            // right
+            self.rightView = paddingView
+            self.rightViewMode = .always
+        }
+    }
+}
+
+//extension UIImageView {
+//  public func maskCircle(anyImage: UIImage) {
+//    self.contentMode = .scaleAspectFit
+//    self.layer.cornerRadius = self.frame.height / 2
+//    self.layer.masksToBounds = false
+//    self.clipsToBounds = true
+//
+//   // make square(* must to make circle),
+//   // resize(reduce the kilobyte) and
+//   // fix rotation.
+//   self.image = anyImage
+//  }
+//}
