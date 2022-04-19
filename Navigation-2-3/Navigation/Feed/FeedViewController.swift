@@ -9,7 +9,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    let post = Post()
+    //let post = Post()
 
     private let postButtonOne: UIButton = {
         let button = UIButton()
@@ -46,7 +46,7 @@ class FeedViewController: UIViewController {
 
     @objc private func tapAction() {
         let postVC = PostViewController()
-        postVC.postTitle = post.title
+        postVC.postTitle = "Пример заголовка" 
         navigationController?.pushViewController(postVC, animated: true)
     }
 

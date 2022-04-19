@@ -50,11 +50,10 @@ class LogInView: UIView {
         return textField
     }()
 
-    private let loginButton: UIButton = {
+    let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("log in", for: .normal)
         button.backgroundColor = ColorSet.mainColor
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.layer.cornerRadius = 4
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -100,11 +99,6 @@ class LogInView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc private func buttonPressed() {
-        let newView = ProfileViewController()
-        presentViewController(newView, animated: true, completion: nil)
-    }
-
     private func drawSelf() {
         [logoImageView, mainHorizontalStack].forEach({ self.addSubview($0)})
 
@@ -131,68 +125,3 @@ class LogInView: UIView {
         ])
     }
 }
-
-
-
-
-// Резерв
-
-/*
- private func drawSelf() {
-     [logoImageView, textFieldHorizontalStack, loginButton].forEach({ self.addSubview($0)})
-
-     [mailOrPhoneNumTextField,loginDivider, passwordTextField].forEach({self.textFieldHorizontalStack.addArrangedSubview($0)})
-
-
-     NSLayoutConstraint.activate([
-         self.textFieldHorizontalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-         self.textFieldHorizontalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-         self.textFieldHorizontalStack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-
-         self.loginDivider.heightAnchor.constraint(equalToConstant: 1),
-         self.mailOrPhoneNumTextField.heightAnchor.constraint(equalToConstant: 50),
-         self.passwordTextField.heightAnchor.constraint(equalToConstant: 50),
-
-         self.logoImageView.widthAnchor.constraint(equalToConstant: 100),
-         self.logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor, multiplier: 1),
-
-         self.logoImageView.centerXAnchor.constraint(equalTo: self.textFieldHorizontalStack.centerXAnchor),
-         self.logoImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-
-
-         self.loginButton.heightAnchor.constraint(equalToConstant: 50),
-         self.loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-         self.loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-         self.loginButton.topAnchor.constraint(equalTo: self.textFieldHorizontalStack.bottomAnchor, constant: 16)
-
-     ])
- }
-
- private func drawSelf2() {
-     self.addSubview(mainHorizontalStack)
-     [logoHorizontalStack, textFieldHorizontalStack, loginButton].forEach({self.mainHorizontalStack.addArrangedSubview($0)})
-
-     [mailOrPhoneNumTextField,loginDivider, passwordTextField].forEach({self.textFieldHorizontalStack.addArrangedSubview($0)})
-
-     [UIView(),logoImageView, UIView()].forEach({self.logoHorizontalStack.addArrangedSubview($0)})
-
-
-     NSLayoutConstraint.activate([
-         self.loginDivider.heightAnchor.constraint(equalToConstant: 1),
-
-         self.mainHorizontalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-         self.mainHorizontalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-         self.mainHorizontalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-         self.mainHorizontalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-
-         self.logoImageView.heightAnchor.constraint(equalToConstant: 75),
-         self.logoImageView.widthAnchor.constraint(equalToConstant: 75),
-         self.logoImageView.bottomAnchor.constraint(equalTo: self.textFieldHorizontalStack.topAnchor, constant: -20),
-
-
-         self.mailOrPhoneNumTextField.heightAnchor.constraint(equalToConstant: 40),
-         self.passwordTextField.heightAnchor.constraint(equalToConstant: 40),
-         self.loginButton.heightAnchor.constraint(equalToConstant: 40)
-     ])
- }
- */

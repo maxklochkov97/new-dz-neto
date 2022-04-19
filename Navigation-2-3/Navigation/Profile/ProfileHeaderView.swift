@@ -23,18 +23,9 @@ class ProfileHeaderView: UIView {
         return button
     }()
 
-    let changeTitleButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Change title", for: .normal)
-        button.backgroundColor = .systemBlue
-        //button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
     private let statusTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = " Enter text here..."
+        textField.placeholder = "Enter text here..."
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 15, weight: .regular)
         textField.layer.borderWidth = 1
@@ -124,7 +115,7 @@ class ProfileHeaderView: UIView {
             self.mainVerticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             self.mainVerticalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.mainVerticalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.mainVerticalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.mainVerticalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
             self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
             self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
