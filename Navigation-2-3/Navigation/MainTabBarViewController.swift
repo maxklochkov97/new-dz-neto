@@ -17,6 +17,7 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         UITabBar.appearance().barTintColor = ColorSet.mainColor
         UITabBar.appearance().backgroundColor = ColorSet.secondColor
+        UITabBar.appearance().barTintColor = ColorSet.secondColor
         setupControllers()
     }
 

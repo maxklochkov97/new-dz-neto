@@ -12,43 +12,26 @@ class ProfileViewController: UIViewController {
     private let postModel: [Post] = Post.allPosts()
 
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier )
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         return tableView
     }()
-    
-    // Олд
-    
-    private lazy var profileHV: ProfileHeaderView = {
-        let view = ProfileHeaderView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        profileHV.avatarImageView.layer.cornerRadius = profileHV.avatarImageView.layer.frame.width / 2
-    }
-    
+
     private func setupView() {
         self.view.backgroundColor = ColorSet.secondColor
-        [self.profileHV, self.tableView].forEach({ self.view.addSubview($0)})
+        [self.tableView].forEach({ self.view.addSubview($0)})
+
         
         NSLayoutConstraint.activate([
-            self.profileHV.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            self.profileHV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.profileHV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.profileHV.heightAnchor.constraint(equalToConstant: 220),
-            
-            self.tableView.topAnchor.constraint(equalTo: profileHV.bottomAnchor),
+            self.tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             self.tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             self.tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             self.tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -58,7 +41,7 @@ class ProfileViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
-        
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  postModel.count
     }
@@ -66,6 +49,8 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
         cell.setupCell(postModel[indexPath.row])
+        cell.selectionStyle = .none
+        cell.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
         return cell
     }
 }
@@ -77,21 +62,9 @@ extension ProfileViewController: UITableViewDelegate {
         UITableView.automaticDimension
     }
     
-    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        let header = CustomHeaderView()
-    //        let text = "Это хедер секции \(section)"
-    //        header.setupHeader(text: text)
-    //        return header
-    //    }
-    //
-    //    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    //        let header = CustomHeaderView()
-    //        let text = "Это футор секции \(section)"
-    //        header.setupHeader(text: text)
-    //        return header
-    //    }
-    
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        //section % 2 == 0 ? 150 : 50
-//    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = ProfileHeaderView()
+        header.backgroundColor = ColorSet.secondColor
+        return header
+    }
 }

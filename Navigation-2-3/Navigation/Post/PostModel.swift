@@ -19,7 +19,7 @@ struct Post {
 
         posts.append(Post(author: "Автор", description: "Описание", image: UIImage(named: "catImage")!, likes: 1, views: 1))
         posts.append(Post(author: "Автор2", description: "Если стать котику на хвостик, он скажет: АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА", image: UIImage(named: "catImage")!, likes: 1, views: 1))
-        posts.append(Post(author: "Автор3", description: "Описание", image: UIImage(named: "catImage")!, likes: 1, views: 1))
+        posts.append(Post(author: "Авто3 и это очень длинный автор, аж на 2 строки", description: "Описание", image: UIImage(named: "catImage")!, likes: 1, views: 1))
         posts.append(Post(author: "Автор4", description: "Если стать котику на хвостик, он скажет: АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА-АААА", image: UIImage(named: "catImage")!, likes: 1, views: 1))
 
         return posts

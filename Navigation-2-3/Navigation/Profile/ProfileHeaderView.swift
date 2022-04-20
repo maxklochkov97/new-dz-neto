@@ -56,11 +56,12 @@ class ProfileHeaderView: UIView {
         return label
     }()
 
-    let avatarImageView: UIImageView = {
+    var avatarImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "catImage2"))
         imageView.frame = .zero
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 3
+        imageView.layer.cornerRadius = 50
         imageView.layer.masksToBounds = false
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.clipsToBounds = true
@@ -117,7 +118,9 @@ class ProfileHeaderView: UIView {
             self.mainVerticalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.mainVerticalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
-            self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
+//            self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
+            self.avatarImageView.widthAnchor.constraint(equalToConstant: 100),
+            self.avatarImageView.heightAnchor.constraint(equalToConstant: 100),
             self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
             self.setStatusButton.heightAnchor.constraint(equalToConstant: 50)
         ])

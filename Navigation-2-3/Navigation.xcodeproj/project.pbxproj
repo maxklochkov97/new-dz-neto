@@ -19,6 +19,7 @@
 		5F14165F280D795000CFB844 /* ColorSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F14165E280D795000CFB844 /* ColorSet.swift */; };
 		5F141661280D797500CFB844 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F141660280D797500CFB844 /* LogInViewController.swift */; };
 		5F141663280D7A8700CFB844 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F141662280D7A8700CFB844 /* LogInView.swift */; };
+		5F1650262810035900B98048 /* PostHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1650252810035900B98048 /* PostHeaderCell.swift */; };
 		5F2A470E27FC199D008C6C49 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2A470D27FC199D008C6C49 /* FeedViewController.swift */; };
 		5F2A471027FC2B84008C6C49 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2A470F27FC2B84008C6C49 /* PostViewController.swift */; };
 		5F2A471227FC2C3C008C6C49 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2A471127FC2C3C008C6C49 /* PostModel.swift */; };
@@ -43,6 +44,7 @@
 		5F14165E280D795000CFB844 /* ColorSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSet.swift; sourceTree = "<group>"; };
 		5F141660280D797500CFB844 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		5F141662280D7A8700CFB844 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		5F1650252810035900B98048 /* PostHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostHeaderCell.swift; sourceTree = "<group>"; };
 		5F2A470D27FC199D008C6C49 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		5F2A470F27FC2B84008C6C49 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		5F2A471127FC2C3C008C6C49 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				5F2A470F27FC2B84008C6C49 /* PostViewController.swift */,
 				5F2A471127FC2C3C008C6C49 /* PostModel.swift */,
 				5F0583F0280F010C00F4980C /* PostTableViewCell.swift */,
+				5F1650252810035900B98048 /* PostHeaderCell.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				5F141661280D797500CFB844 /* LogInViewController.swift in Sources */,
 				5F5D6EC527FB00A2001BE2D6 /* ProfileViewController.swift in Sources */,
 				5FA2B5CA2805895200298FEE /* Extensions+UITextField.swift in Sources */,
+				5F1650262810035900B98048 /* PostHeaderCell.swift in Sources */,
 				5F01C6B527FAC472002AF921 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

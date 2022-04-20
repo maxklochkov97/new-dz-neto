@@ -54,7 +54,7 @@ class LogInViewController: UIViewController {
     }
 
     @objc private func kbhShow(notification: NSNotification) {
-        let buttonHeight: CGFloat = 40
+        let buttonHeight: CGFloat = logInView.loginButton.frame.height
         if let kbhSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = kbhSize.height + buttonHeight
             scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbhSize.height + buttonHeight, right: 0)

@@ -55,8 +55,26 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
+        label.textAlignment = .right
         label.text = "viewsLabel"
         return label
+    }()
+
+    private let labelVerticalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .fillProportionally
+        stack.spacing = 0
+        return stack
+    }()
+
+    private let mainLabelVerticalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .fillProportionally
+        stack.axis = .vertical
+        stack.spacing = 16
+        return stack
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -77,8 +95,12 @@ class PostTableViewCell: UITableViewCell {
     }
     
     private func layout() {
-        [whiteView, postImageView, authorLabel, descriptionLabel, likeLabel, viewsLabel].forEach { contentView.addSubview($0) }
-        
+        [whiteView, postImageView, authorLabel, mainLabelVerticalStack].forEach { contentView.addSubview($0) }
+
+        [descriptionLabel, labelVerticalStack].forEach({ mainLabelVerticalStack.addArrangedSubview($0) })
+
+        [likeLabel, viewsLabel].forEach({ labelVerticalStack.addArrangedSubview($0) })
+
         let offsetView: CGFloat = 0
         let offsetLabel: CGFloat = 16
         
@@ -92,28 +114,19 @@ class PostTableViewCell: UITableViewCell {
             // authorLabel
             authorLabel.topAnchor.constraint(equalTo: whiteView.topAnchor, constant: offsetLabel),
             authorLabel.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetLabel),
-            
+            authorLabel.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetLabel),
+
             // postImageView
             postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: offsetLabel),
             postImageView.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetView),
             postImageView.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetView),
             postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor, multiplier: 1),
-            
-            // descriptionLabel
-            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: offsetLabel),
-            descriptionLabel.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetLabel),
-            descriptionLabel.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetLabel),
-            
-            // likeLabel
-            likeLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: offsetLabel),
-            likeLabel.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetLabel),
-            likeLabel.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: -offsetLabel),
-            
-            // viewsLabel
-            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: offsetLabel),
-            viewsLabel.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetLabel),
-            viewsLabel.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: -offsetLabel),
-            
+
+            // mainLabelVerticalStack
+            mainLabelVerticalStack.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: offsetLabel),
+            mainLabelVerticalStack.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetLabel),
+            mainLabelVerticalStack.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetLabel),
+            mainLabelVerticalStack.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: -offsetLabel),
         ])
     }
 }
