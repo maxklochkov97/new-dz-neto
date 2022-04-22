@@ -28,6 +28,9 @@
 		5F5D6EC327FB006D001BE2D6 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5D6EC227FB006D001BE2D6 /* MainTabBarViewController.swift */; };
 		5F5D6EC527FB00A2001BE2D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5D6EC427FB00A2001BE2D6 /* ProfileViewController.swift */; };
 		5FA2B5CA2805895200298FEE /* Extensions+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2B5C92805895200298FEE /* Extensions+UITextField.swift */; };
+		5FD6E8DE28128E8900035491 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6E8DD28128E8900035491 /* PhotoCollectionViewCell.swift */; };
+		5FD6E8E02812977000035491 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6E8DF2812977000035491 /* PhotosModel.swift */; };
+		5FD6E8E22812AB1000035491 /* PhotoHeaderCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6E8E12812AB1000035491 /* PhotoHeaderCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		5F5D6EC227FB006D001BE2D6 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		5F5D6EC427FB00A2001BE2D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FA2B5C92805895200298FEE /* Extensions+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UITextField.swift"; sourceTree = "<group>"; };
+		5FD6E8DD28128E8900035491 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		5FD6E8DF2812977000035491 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
+		5FD6E8E12812AB1000035491 /* PhotoHeaderCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoHeaderCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,9 @@
 			isa = PBXGroup;
 			children = (
 				5F3AD7D428119B88004391FD /* PhotosTableViewCell.swift */,
+				5FD6E8DD28128E8900035491 /* PhotoCollectionViewCell.swift */,
+				5FD6E8DF2812977000035491 /* PhotosModel.swift */,
+				5FD6E8E12812AB1000035491 /* PhotoHeaderCollectionView.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -232,10 +241,13 @@
 				5F2A471227FC2C3C008C6C49 /* PostModel.swift in Sources */,
 				5F2A471427FC2E90008C6C49 /* InfoViewController.swift in Sources */,
 				5F5D6EC327FB006D001BE2D6 /* MainTabBarViewController.swift in Sources */,
+				5FD6E8DE28128E8900035491 /* PhotoCollectionViewCell.swift in Sources */,
 				5F01C6B327FAC472002AF921 /* AppDelegate.swift in Sources */,
 				5F0B731427FD7B41000E3733 /* ProfileHeaderView.swift in Sources */,
 				5F14165F280D795000CFB844 /* ColorSet.swift in Sources */,
+				5FD6E8E02812977000035491 /* PhotosModel.swift in Sources */,
 				5F0583F1280F010C00F4980C /* PostTableViewCell.swift in Sources */,
+				5FD6E8E22812AB1000035491 /* PhotoHeaderCollectionView.swift in Sources */,
 				5F141661280D797500CFB844 /* LogInViewController.swift in Sources */,
 				5F5D6EC527FB00A2001BE2D6 /* ProfileViewController.swift in Sources */,
 				5FA2B5CA2805895200298FEE /* Extensions+UITextField.swift in Sources */,
@@ -397,7 +409,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -424,7 +436,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

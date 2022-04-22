@@ -18,17 +18,6 @@ class ProfileViewController: UIViewController {
         return array
     }
 
-    private lazy var photoCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = .gray
-        collection.dataSource = self
-        collection.delegate = self
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        return collection
-    }()
-    
     private let postModel: [Post] = Post.allPosts()
 
     private lazy var tableView: UITableView = {
@@ -37,6 +26,8 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
+
         return tableView
     }()
 
@@ -67,11 +58,19 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
-        cell.setupCell(postModel[indexPath.row])
-        cell.selectionStyle = .none
-        cell.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
-        return cell
+
+        if indexPath.item == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
+            cell.selectionStyle = .none
+            cell.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+            cell.setupCell(postModel[indexPath.row])
+            cell.selectionStyle = .none
+            cell.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+            return cell
+        }
     }
 }
 
@@ -92,11 +91,12 @@ extension ProfileViewController: UITableViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension ProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        collModel.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as! PhotosCollectionViewCell
+        return cell
     }
 }
 

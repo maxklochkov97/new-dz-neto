@@ -118,7 +118,6 @@ class ProfileHeaderView: UIView {
             self.mainVerticalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.mainVerticalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
-//            self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0),
             self.avatarImageView.widthAnchor.constraint(equalToConstant: 100),
             self.avatarImageView.heightAnchor.constraint(equalToConstant: 100),
             self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
