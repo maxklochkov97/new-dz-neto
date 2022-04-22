@@ -9,15 +9,21 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    private var collModel: [Int] {
-        var array = [Int]()
-        for element in 0...20 {
-            array.append(element)
-        }
+    // 2-5
+    var photoModel = Photo.allP()
 
-        return array
-    }
+    private lazy var photoTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: PhotoTableViewCell.identifier)
+        return tableView
+    }()
+    // 2-5
 
+
+    
     private let postModel: [Post] = Post.allPosts()
 
     private lazy var tableView: UITableView = {
@@ -26,7 +32,7 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
+        tableView.register(PhotoTableViewCell.self, forCellReuseIdentifier: PhotoTableViewCell.identifier)
 
         return tableView
     }()
@@ -60,9 +66,9 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.item == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
-            cell.selectionStyle = .none
-            cell.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+            let cell = tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.identifier, for: indexPath) as! PhotoTableViewCell
+            cell.configure(photos: photoModel)
+            cell.separatorInset = .init(top: 0, left: 0, bottom: 0, right: 0)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
@@ -78,7 +84,12 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        if indexPath.item == 0 {
+            return 100
+
+        } else {
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -86,21 +97,4 @@ extension ProfileViewController: UITableViewDelegate {
         header.backgroundColor = ColorSet.secondColor
         return header
     }
-}
-
-// MARK: - UICollectionViewDataSource
-extension ProfileViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        collModel.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as! PhotosCollectionViewCell
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension ProfileViewController: UICollectionViewDelegateFlowLayout {
-
 }
