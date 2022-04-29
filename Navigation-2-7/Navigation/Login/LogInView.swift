@@ -133,7 +133,7 @@ class LogInView: UIView {
             )
         }
 
-        if password.count <= 6 {
+        if password.count <= 6 && password.count > 0 {
             passwordTextField.text = ""
             passWarningLabel.isHidden = false
         }

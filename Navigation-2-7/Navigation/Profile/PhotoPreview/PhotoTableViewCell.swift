@@ -9,7 +9,7 @@ import UIKit
 
 class PhotoTableViewCell: UITableViewCell {
 
-    weak var delegate: ButtonCellDelegate?
+    weak var buttonAllPhotoDelegate: ButtonAllPhotoDelegate?
 
     private let layoutCol: UICollectionViewFlowLayout = {
         $0.scrollDirection = .horizontal
@@ -34,7 +34,7 @@ class PhotoTableViewCell: UITableViewCell {
 
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutCol)
-        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
+        collectionView.register(PhotoPreviewCollectionViewCell.self, forCellWithReuseIdentifier: PhotoPreviewCollectionViewCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -57,7 +57,7 @@ class PhotoTableViewCell: UITableViewCell {
     }
 
     @objc private func tapAction() {
-        delegate?.buttonPressed()
+        buttonAllPhotoDelegate?.buttonAllPhotoPressed()
     }
 
     func configure(photos: [Photo]) {
@@ -97,7 +97,7 @@ extension PhotoTableViewCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoPreviewCollectionViewCell.identifier, for: indexPath) as! PhotoPreviewCollectionViewCell
         cell.configure(with: photos[indexPath.row])
         cell.allPhotoButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         return cell

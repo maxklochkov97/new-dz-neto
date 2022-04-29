@@ -9,6 +9,38 @@ import UIKit
 
 class AllPhotoViewController: UIViewController {
 
+    private let cancelAnimationButton: UIButton = {
+        let button = UIButton()
+        button.layer.opacity = 0
+        button.setImage(UIImage(named: "close"), for: .normal)
+        button.addTarget(self, action: #selector(pressCancelAnimationButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isUserInteractionEnabled = true
+        return button
+    }()
+
+    private let blackView: UIView = {
+        let view = UIView()
+        view.frame = UIScreen.main.bounds
+        view.backgroundColor = .black
+        view.alpha = 0.8
+        view.isUserInteractionEnabled = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.opacity = 0
+        return view
+    }()
+
+    var fullScreenImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "catImage2"))
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.opacity = 0
+        imageView.layer.masksToBounds = false
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
     private let photos = Photo.allPhotos()
 
     private let layoutCol: UICollectionViewFlowLayout = {
@@ -39,7 +71,7 @@ class AllPhotoViewController: UIViewController {
     }
     
     private func layout() {
-        [collectionView].forEach({ view.addSubview($0) })
+        [collectionView, blackView, fullScreenImageView, cancelAnimationButton].forEach({ view.addSubview($0) })
 
         let offset: CGFloat = 8
 
@@ -49,6 +81,16 @@ class AllPhotoViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: offset),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -offset),
+
+            fullScreenImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            fullScreenImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            fullScreenImageView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            fullScreenImageView.heightAnchor.constraint(equalTo: fullScreenImageView.widthAnchor, multiplier: 1),
+
+            cancelAnimationButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: offset),
+            cancelAnimationButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -offset),
+            cancelAnimationButton.widthAnchor.constraint(equalToConstant: 40),
+            cancelAnimationButton.heightAnchor.constraint(equalTo: cancelAnimationButton.widthAnchor, multiplier: 1),
         ])
     }
 }
@@ -63,6 +105,7 @@ extension AllPhotoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AllPhotoCollectionViewCell.identifier, for: indexPath) as! AllPhotoCollectionViewCell
         cell.configure(with: photos[indexPath.row])
+        cell.buttonAllPhotoCellDelegate = self
         return cell
     }
 }
@@ -83,5 +126,50 @@ extension AllPhotoViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         sideInset
+    }
+}
+
+// MARK: - TapPostImageDelegate
+
+extension AllPhotoViewController: TapAllPhotoCellDelegate {
+
+    func tapAction(photo: UIImage) {
+        self.fullScreenImageView.image = photo
+        self.navigationController?.isNavigationBarHidden = true
+
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 0.0,
+                       options: .curveEaseInOut) {
+
+            self.blackView.layer.opacity = 0.8
+            self.fullScreenImageView.layer.opacity = 1
+            self.view.layoutIfNeeded()
+
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3,
+                           delay: 0.0) {
+                self.cancelAnimationButton.layer.opacity = 1
+            }
+        }
+    }
+
+    @objc func pressCancelAnimationButton() {
+        UIView.animate(withDuration: 0.3,
+                       delay: 0.0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 0.0,
+                       options: .curveEaseInOut) {
+            self.cancelAnimationButton.layer.opacity = 0
+        } completion: { _ in
+            UIView.animate(withDuration: 0.5,
+                           delay: 0.0) {
+                self.blackView.layer.opacity = 0.0
+                self.fullScreenImageView.layer.opacity = 0
+                self.navigationController?.isNavigationBarHidden = false
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 }

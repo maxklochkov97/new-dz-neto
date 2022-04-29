@@ -8,7 +8,11 @@
 import UIKit
 
 class PostTableViewCell: UITableViewCell {
-    
+
+    weak var tapPostImageDelegate: TapPostImageDelegate?
+
+    private var modelPostFull = Post(author: "", description: "", image: UIImage(named: "catImage")!, likes: 1, views: 1)
+
     private let whiteView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +34,7 @@ class PostTableViewCell: UITableViewCell {
         imageView.backgroundColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -38,15 +43,16 @@ class PostTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemGray
         label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.text = "descriptionLabel"
         return label
     }()
     
-    private let likeLabel: UILabel = {
+    private var likeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
+        label.isUserInteractionEnabled = true
         label.text = "likeLabel"
         return label
     }()
@@ -57,13 +63,15 @@ class PostTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .right
         label.text = "viewsLabel"
+        label.isUserInteractionEnabled = true
+
         return label
     }()
 
     private let labelVerticalStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .fillProportionally
+        stack.distribution = .equalSpacing
         stack.spacing = 0
         return stack
     }()
@@ -80,13 +88,48 @@ class PostTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         layout()
+        setupGestures()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private func setupGestures() {
+        let tapLikeLabelGesture = UITapGestureRecognizer(target: self, action: #selector(likeAction))
+        likeLabel.addGestureRecognizer(tapLikeLabelGesture)
+
+        let tapPostImageViewGesture = UITapGestureRecognizer(target: self, action: #selector(postImageViewAction))
+        postImageView.addGestureRecognizer(tapPostImageViewGesture)
+    }
+
+    @objc private func postImageViewAction() {
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 0.0,
+                       options: .curveEaseInOut) {
+            
+            self.modelPostFull.views += 1
+            self.viewsLabel.text = "views \(self.modelPostFull.views)"
+            self.tapPostImageDelegate?.postImagePressed(author: self.modelPostFull.author, description: self.modelPostFull.description, image: self.modelPostFull.image)
+        }
+    }
+
+    @objc private func likeAction() {
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 0.0,
+                       options: .curveEaseInOut) {
+
+            self.modelPostFull.likes += 1
+            self.likeLabel.text = "likes \(self.modelPostFull.likes)"
+        }
+    }
     
     func setupCell(_ model: Post) {
+        modelPostFull = model
         authorLabel.text = model.author
         postImageView.image = model.image
         descriptionLabel.text = model.description
@@ -105,28 +148,24 @@ class PostTableViewCell: UITableViewCell {
         let offsetLabel: CGFloat = 16
         
         NSLayoutConstraint.activate([
-            // whiteView
             whiteView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: offsetView),
             whiteView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: offsetView),
             whiteView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offsetView),
             whiteView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -offsetView),
-            
-            // authorLabel
+
             authorLabel.topAnchor.constraint(equalTo: whiteView.topAnchor, constant: offsetLabel),
             authorLabel.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetLabel),
             authorLabel.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetLabel),
 
-            // postImageView
             postImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: offsetLabel),
             postImageView.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetView),
             postImageView.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetView),
             postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor, multiplier: 1),
 
-            // mainLabelVerticalStack
             mainLabelVerticalStack.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: offsetLabel),
             mainLabelVerticalStack.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: offsetLabel),
             mainLabelVerticalStack.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -offsetLabel),
-            mainLabelVerticalStack.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: -offsetLabel),
+            mainLabelVerticalStack.bottomAnchor.constraint(equalTo: whiteView.bottomAnchor, constant: -offsetLabel)
         ])
     }
 }

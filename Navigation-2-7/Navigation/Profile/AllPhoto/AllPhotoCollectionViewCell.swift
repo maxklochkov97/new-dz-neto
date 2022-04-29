@@ -9,11 +9,13 @@ import UIKit
 
 class AllPhotoCollectionViewCell: UICollectionViewCell {
 
-    private var photoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "catImage2"))
-        imageView.frame = .zero
+    weak var buttonAllPhotoCellDelegate: TapAllPhotoCellDelegate?
+
+    private lazy var photoImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -21,10 +23,21 @@ class AllPhotoCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
+        setupGestures()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(photoAction))
+        photoImageView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func photoAction() {
+        buttonAllPhotoCellDelegate?.tapAction(photo: photoImageView.image!)
     }
 
     func configure(with photo: Photo) {

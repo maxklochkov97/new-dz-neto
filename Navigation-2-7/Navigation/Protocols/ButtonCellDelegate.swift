@@ -1,13 +1,12 @@
 //
-//  File.swift
+//  ButtonCellDelegate.swift
 //  Navigation
 //
-//  Created by Максим Клочков on 28.04.2022.
+//  Created by Максим Клочков on 02.05.2022.
 //
 
 import Foundation
 
-protocol ButtonCellDelegate: AnyObject {
-    func buttonPressed()
+protocol ButtonAllPhotoDelegate: AnyObject {
+    func buttonAllPhotoPressed()
 }
-

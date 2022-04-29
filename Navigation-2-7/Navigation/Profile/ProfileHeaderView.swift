@@ -91,7 +91,6 @@ class ProfileHeaderView: UIView {
         view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.opacity = 0
-        // view.isHidden = true
         return view
     }()
 
@@ -158,6 +157,8 @@ class ProfileHeaderView: UIView {
                 self.avatarImageView.layer.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
                 self.avatarImageView.layer.cornerRadius = self.avatarImageView.bounds.width / 2
                 self.layoutIfNeeded()
+
+                self.isUserInteractionEnabled = true
             }
         }
     }
@@ -200,8 +201,15 @@ class ProfileHeaderView: UIView {
     }
 
     @objc private func buttonPressed() {
+        if statusTextField.text == "" {
+            statusTextField.attributedPlaceholder = NSAttributedString(
+                string: "Cannot be empty",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red]
+            )
+        }
+
+        guard statusTextField.text != "" else { return }
         statusLabel.text = statusText ?? ""
-        print(statusLabel.text ?? "Поле статус пусто...")
     }
 
     @objc private func statusTextChanged(_ textField: UITextField) {

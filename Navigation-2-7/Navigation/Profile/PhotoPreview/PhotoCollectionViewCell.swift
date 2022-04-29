@@ -7,13 +7,10 @@
 
 import UIKit
 
-class PhotoCollectionViewCell: UICollectionViewCell {
-
-    weak var delegate: ButtonCellDelegate?
+class PhotoPreviewCollectionViewCell: UICollectionViewCell {
 
     private var photoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "catImage2"))
-        imageView.frame = .zero
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false

@@ -9,8 +9,9 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    var photoModel = Photo.allPhotos()
-    private let postModel: [Post] = Post.allPosts()
+    private let photoModel = Photo.allPhotos()
+
+    private var postModel: [Post] = Post.allPosts()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -24,7 +25,7 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        layout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -32,7 +33,7 @@ class ProfileViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
-    private func setupView() {
+    private func layout() {
         self.view.backgroundColor = ColorSet.secondColor
 
         [self.tableView].forEach({ self.view.addSubview($0)})
@@ -48,6 +49,19 @@ class ProfileViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            postModel.remove(at: indexPath.row )
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -70,17 +84,17 @@ extension ProfileViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.identifier, for: indexPath) as! PhotoTableViewCell
             cell.configure(photos: photoModel)
             cell.selectionStyle = .none
-            cell.delegate = self
+            cell.buttonAllPhotoDelegate = self
             cell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
             cell.setupCell(postModel[indexPath.row])
+            cell.tapPostImageDelegate = self
             cell.selectionStyle = .none
             cell.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
             return cell
@@ -90,7 +104,6 @@ extension ProfileViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 150
@@ -114,11 +127,23 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - ButtonDelegate
+// MARK: - ButtonAllPhotoDelegate
 
-extension ProfileViewController: ButtonCellDelegate {
-    func buttonPressed() {
+extension ProfileViewController: ButtonAllPhotoDelegate {
+    func buttonAllPhotoPressed() {
         let newView = AllPhotoViewController()
+        navigationController?.pushViewController(newView, animated: true)
+    }
+}
+
+// MARK: - TapPostImageDelegate
+
+extension ProfileViewController: TapPostImageDelegate {
+    func postImagePressed(author: String, description: String, image: UIImage) {
+        let newView = PostFullScreenViewController()
+        newView.authorLabel.text = author
+        newView.postImageView.image = image
+        newView.descriptionLabel.text = description
         navigationController?.pushViewController(newView, animated: true)
     }
 }
