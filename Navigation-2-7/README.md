@@ -1,6 +1,6 @@
 # Дипломные проект по завершению курса Нетологии IOS-разработчик.
 
-![photo](/video.mp4)
+https://user-images.githubusercontent.com/96248026/166232172-ca5ced25-201b-4366-8b91-fa96ae695d07.mp4
 
 ## Данные для входа в приложение:
 * Логин test@yandex.ru
